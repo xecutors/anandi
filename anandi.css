@@ -17,8 +17,9 @@ html {
 }
 
 body {
-  font-family: "Montserrat", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+  font-family: "Poppins", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 200;
   line-height: 1.4em;
   margin: 0;
   background-image: linear-gradient(
@@ -64,14 +65,16 @@ section li + li {
 }
 
 strong,
-b {
-  font-weight: 500;
+b,
+.bold {
+  font-weight: 300;
 }
 
 h1 {
   font-size: 5rem;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 1.2;
+  letter-spacing: -3px;
   @media (width < 767px) {
     font-size: 2.5rem;
   }
@@ -79,9 +82,10 @@ h1 {
 
 h2 {
   font-size: 3rem;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 1.2;
   scroll-margin-top: 7rem;
+  letter-spacing: -2px;
   @media (width < 767px) {
     font-size: 2.25rem;
   }
@@ -89,23 +93,35 @@ h2 {
 
 h3 {
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 1.2;
   scroll-margin-top: 7rem;
-
+  letter-spacing: -1px;
   @media (width < 767px) {
     font-size: 1.5rem;
   }
 }
 
-h4,
+h4 {
+  font-weight: 200;
+}
+
 h5,
 h6 {
-  font-weight: 500;
+  font-weight: 300;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 address {
   font-style: normal;
+}
+
+sup {
+  font-size: 0.375em;
+  font-style: italic;
 }
 
 .shadow {
@@ -138,20 +154,22 @@ nav {
     font-size: 0.875rem;
     white-space: nowrap;
   }
+  li.hide-on-mobile {
+    @media (width < 767px) {
+      display: none;
+    }
+  }
   a {
     display: block;
     padding: 0.625em 0;
     width: auto;
     color: var(--primary);
     text-decoration: none;
-    transition: all 1.681s ease-in;
+    font-weight: 300;
     &:hover,
     &:focus-visible {
       text-shadow: 1px 4px 8px rgba(0, 0, 0, 0.15);
     }
-  }
-  @media (width < 767px) {
-    display: none;
   }
 }
 
@@ -216,7 +234,7 @@ nav::-webkit-scrollbar {
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -4px rgba(0, 0, 0, 0.1);
       background-color: var(--withblur);
-      font-weight: 500;
+      font-weight: 300;
       transform: translateX(1rem);
       padding-inline: 0.5em;
       border: 1px solid rgba(255, 255, 255, 0.15);
