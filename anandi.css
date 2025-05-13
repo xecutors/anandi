@@ -3,7 +3,7 @@
   --secondary: #f8f0d5;
   --tertiary: #d4b78f;
   --quaternary: #e5d8ae;
-  --withblur: rgba(248, 240, 213, 0.4);
+  --withblur: rgba(248, 240, 213, 0.6);
 }
 
 html {
@@ -28,6 +28,9 @@ body {
     var(--quaternary) 100%
   );
   color: var(--primary);
+  @media (width < 767px) {
+    font-weight: 300;
+  }
   @media (width > 1200px) {
     font-size: 1.125rem;
   }
@@ -37,13 +40,15 @@ img {
   max-width: 100%;
   margin-top: 2.5rem;
   margin-bottom: 1.75rem;
-  border-radius: 1.5em;
 }
 
 .container {
   max-width: 1240px;
   padding-inline: 1rem;
-  margin: 100px auto 0;
+  margin: 60px auto 0;
+  @media (width > 767px) {
+    margin-top: 100px;
+  }
 }
 
 section {
@@ -68,6 +73,9 @@ strong,
 b,
 .bold {
   font-weight: 300;
+  @media (width < 767px) {
+    font-weight: 400;
+  }
 }
 
 h1 {
@@ -75,8 +83,11 @@ h1 {
   font-weight: 100;
   line-height: 1.2;
   letter-spacing: -3px;
+  text-wrap: balance;
   @media (width < 767px) {
     font-size: 2.5rem;
+    font-weight: 200;
+    letter-spacing: -1px;
   }
 }
 
@@ -86,8 +97,11 @@ h2 {
   line-height: 1.2;
   scroll-margin-top: 7rem;
   letter-spacing: -2px;
+  text-wrap: balance;
   @media (width < 767px) {
-    font-size: 2.25rem;
+    font-size: 1.875rem;
+    font-weight: 200;
+    letter-spacing: -0.5px;
   }
 }
 
@@ -99,11 +113,16 @@ h3 {
   letter-spacing: -1px;
   @media (width < 767px) {
     font-size: 1.5rem;
+    font-weight: 200;
+    letter-spacing: 0;
   }
 }
 
 h4 {
   font-weight: 200;
+  @media (width < 767px) {
+    font-weight: 300;
+  }
 }
 
 h5,
@@ -113,15 +132,11 @@ h6 {
 
 a {
   -webkit-tap-highlight-color: transparent;
+  color: var(--primary);
 }
 
 address {
   font-style: normal;
-}
-
-sup {
-  font-size: 0.375em;
-  font-style: italic;
 }
 
 .shadow {
@@ -131,33 +146,29 @@ sup {
 
 nav {
   position: sticky;
+  background-color: rgba(255, 255, 255, 0.4);
   top: 1.5rem;
-  margin-left: -1rem;
   backdrop-filter: blur(9px);
-  width: fit-content;
   border-radius: 1em;
   z-index: 1;
-  overflow-x: scroll;
+  overflow-x: auto;
+  text-wrap: nowrap;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
-  border: 1px solid var(--tertiary);
+  border: 1.5px solid var(--tertiary);
+
   ul {
     list-style-type: none;
     margin: 0;
-    padding-inline: 1em;
-    overflow: hidden;
+    padding-inline: 1.5em;
     display: flex;
     align-items: center;
+    width: min-content;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0 1.5rem;
     font-size: 0.875rem;
     white-space: nowrap;
-  }
-  li.hide-on-mobile {
-    @media (width < 767px) {
-      display: none;
-    }
   }
   a {
     display: block;
@@ -178,17 +189,6 @@ nav::-webkit-scrollbar {
   display: none;
 }
 
-@keyframes image-transform {
-  from {
-    transform: scale(0.75) translateY(1.5em);
-    opacity: 0.1;
-  }
-  to {
-    transform: scale(1) translateY(0px);
-    opacity: 1;
-  }
-}
-
 @keyframes opacity-transform {
   from {
     opacity: 0;
@@ -200,7 +200,7 @@ nav::-webkit-scrollbar {
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {
-    img.transform-scroll,
+    .transform-scroll,
     .button {
       animation: image-transform linear both;
       animation-timeline: view();
@@ -211,6 +211,7 @@ nav::-webkit-scrollbar {
     p,
     address,
     h3,
+    h4,
     h2,
     ul,
     svg {
@@ -228,16 +229,18 @@ nav::-webkit-scrollbar {
     from {
       box-shadow: none;
       background-color: transparent;
-      transform: translateX(0);
+      transform: translateX(-1rem);
+      width: 100%;
     }
     to {
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -4px rgba(0, 0, 0, 0.1);
       background-color: var(--withblur);
       font-weight: 300;
-      transform: translateX(1rem);
+      transform: translateX(0);
       padding-inline: 0.5em;
       border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 80%;
     }
   }
 }
@@ -344,6 +347,32 @@ svg.om {
   margin-inline: auto;
 }
 
+.pt-5 {
+  padding-top: 3rem;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
 .grid-col-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15em), 1fr));
@@ -352,66 +381,6 @@ svg.om {
 
 .self-end {
   align-self: end;
-}
-
-.image-grid {
-  columns: 2;
-  column-gap: 1rem;
-  margin-bottom: 10rem;
-  @media (width > 767px) {
-    columns: 3;
-  }
-}
-
-.image-grid img {
-  width: 100%;
-  margin-bottom: -1.75rem;
-}
-
-@keyframes glow {
-  from {
-    filter: drop-shadow(0 0 2px var(--primary))
-      drop-shadow(0 0 4px var(--primary));
-  }
-  to {
-    filter: drop-shadow(0 0 4px var(--primary))
-      drop-shadow(0 0 8px var(--primary)) drop-shadow(0 0 12px var(--primary));
-  }
-}
-
-/* Add some shine effects to images */
-.image-transform {
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.image-transform::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 45%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.1) 55%,
-    transparent 100%
-  );
-  transform: rotate(45deg);
-  animation: shine 3s infinite;
-}
-
-@keyframes shine {
-  0% {
-    transform: translateX(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(100%) rotate(45deg);
-  }
 }
 
 .benefit {
@@ -423,4 +392,280 @@ svg.om {
   display: block;
   height: 200px;
   border-radius: 0;
+}
+
+img.portrait {
+  max-width: 100%;
+  display: block;
+  @media (width > 920px) {
+    width: 800px;
+  }
+}
+
+img.trio {
+  max-width: 100%;
+  border-radius: none;
+  margin: 3em auto;
+  display: block;
+  @media (width > 920px) {
+    width: 800px;
+  }
+}
+
+/* 
+body.hair,
+body.ayurveda {
+  background-image: none !important;
+}
+
+body.hair {
+  color: var(--secondary);
+  background-color: #7e5a76 !important;
+  .button {
+    background-color: #56204a;
+    color: var(--secondary);
+  }
+  nav {
+    border: 1px solid var(--secondary);
+    a {
+      color: var(--secondary);
+    }
+  }
+}
+
+body.ayurveda {
+  color: #232323;
+  background-color: #e8dbe5 !important;
+  .button {
+    background-color: #7e5a76;
+  }
+  nav {
+    border: 1px solid #232323;
+  }
+} */
+
+@media (prefers-reduced-motion: no-preference) {
+  img.fuessli {
+    transform: translateY(-30px);
+    transition: all 0.3s ease;
+    opacity: 0.5;
+    animation: fuessle linear both;
+    animation-timeline: view();
+    animation-range: 10px 20%;
+  }
+
+  @keyframes fuessle {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.trio-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(50%, 8em), 1fr));
+  gap: 1.5em;
+  justify-content: center;
+  margin-bottom: 10rem;
+  @media (width < 768px) {
+    img {
+      margin-block: 0;
+    }
+  }
+  @media (width > 767px) {
+    img:nth-child(2) {
+      margin-top: 5rem;
+    }
+    img:nth-child(3) {
+      margin-top: -2.5rem;
+    }
+  }
+}
+
+.current {
+  font-weight: 400;
+  scale: 1.1;
+}
+
+.scheren-image {
+  max-width: 100%;
+  @media (width > 767px) {
+    max-width: 600px;
+  }
+}
+
+@keyframes image-transform {
+  from {
+    transform: scale(0.75) translateY(1.5em);
+    opacity: 0.1;
+  }
+  to {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+  }
+}
+
+.br {
+  border-radius: 1em;
+}
+
+@property --left-fade {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --right-fade {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes scrollfade {
+  0% {
+    --left-fade: 0;
+  }
+  10%,
+  100% {
+    --left-fade: 3rem;
+  }
+  0%,
+  90% {
+    --right-fade: 3rem;
+  }
+  100% {
+    --right-fade: 0;
+  }
+}
+
+nav {
+  overflow-x: scroll;
+  mask: linear-gradient(
+    to right,
+    #0000,
+    #ffff var(--left-fade) calc(100% - var(--right-fade)),
+    #0000
+  );
+  animation: scrollfade;
+  animation-timeline: --scrollfade;
+  scroll-timeline: --scrollfade x;
+}
+
+/* Form styles */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.3rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  padding: 0.8rem;
+  border: 1px solid var(--tertiary);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--quaternary);
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--quaternary);
+  border: 2px solid var(--tertiary);
+  padding: 6px;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 0.85rem;
+  position: absolute;
+  top: -1px;
+  left: 2px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+fieldset {
+  background-color: var(--quaternary);
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+legend {
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+label {
+  font-size: 1rem;
+}
+
+button {
+  font-family: "Poppins", sans-serif;
+  padding: 1rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+  background-color: var(--primary);
+  }
+  &:focus-visible {
+    outline: 1px solid var(--tertiary);
+  }
 }
