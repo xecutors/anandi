@@ -187,8 +187,10 @@ nav {
     text-decoration: none;
     font-weight: 400;
     position: relative;
+    transform: scale(1);
     transition: transform 0.3s ease, text-shadow 0.3s ease,
       font-weight 0.3s ease;
+    will-change: transform, text-shadow;
     &:hover,
     &:focus-visible {
       text-shadow: 1px 4px 8px rgba(0, 0, 0, 0.15);
@@ -274,7 +276,6 @@ nav::-webkit-scrollbar {
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -4px rgba(0, 0, 0, 0.1);
       background-color: var(--withblur);
-      font-weight: 300;
       transform: translateX(0);
       padding-inline: 0.5em;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -590,7 +591,7 @@ body.ayurveda {
   }
 }
 
-nav {
+/* nav {
   overflow-x: scroll;
   mask: linear-gradient(
     to right,
@@ -601,7 +602,7 @@ nav {
   animation: scrollfade;
   animation-timeline: --scrollfade;
   scroll-timeline: --scrollfade x;
-}
+} */
 
 /* Form styles */
 
