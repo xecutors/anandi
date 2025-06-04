@@ -231,10 +231,19 @@ nav {
     li:not(:last-child) {
       margin-right: 2rem;
     }
+    
+    /* Additional explicit spacing for stubborn browsers */
+    li + li {
+      margin-left: 2rem;
+    }
+    
     @media (max-width: 767px) { /* Changed to max-width for older browser support */
       gap: 0 1.75rem;
       li:not(:last-child) {
         margin-right: 1.75rem;
+      }
+      li + li {
+        margin-left: 1.75rem;
       }
     }
   }
@@ -310,6 +319,17 @@ nav {
     display: inline-block;
     float: none; /* Override float */
     vertical-align: middle;
+    margin-right: 2rem; /* Ensure spacing */
+  }
+  
+  nav ul li:last-child {
+    margin-right: 0; /* Remove margin from last item */
+  }
+  
+  @media (max-width: 767px) {
+    nav ul li {
+      margin-right: 1.75rem;
+    }
   }
 }
 
@@ -330,6 +350,11 @@ nav {
   nav ul li {
     display: inline-block !important;
     float: none !important;
+    margin-right: 2rem !important; /* Ensure spacing between items */
+  }
+  
+  nav ul li:last-child {
+    margin-right: 0 !important; /* Remove margin from last item */
   }
 }
 
