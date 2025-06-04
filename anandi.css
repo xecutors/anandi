@@ -159,12 +159,16 @@ nav {
   z-index: 1;
   overflow-x: auto;
   overflow-y: hidden;
+  overflow: auto; /* Fallback for very old browsers */
   text-wrap: nowrap;
   white-space: nowrap; /* Fallback for older browsers */
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
   border: 1.5px solid transparent;
+  width: 100%; /* Explicit width for old browsers */
+  max-width: 100%; /* Prevent overflow */
+  box-sizing: border-box; /* Include padding and border in width */
   @media (min-width: 1320px) { /* Changed to min-width for older browser support */
     width: calc(100% + 2.5rem);
     margin-left: -1.25rem;
@@ -179,17 +183,34 @@ nav {
     padding-inline: 1.5em;
     padding-left: 1.5em; /* Fallback for browsers that don't support padding-inline */
     padding-right: 1.5em; /* Fallback for browsers that don't support padding-inline */
+    display: -webkit-box; /* OLD flexbox for Safari */
+    display: -moz-box; /* OLD flexbox for Firefox */
+    display: -ms-flexbox; /* IE 10 */
+    display: -webkit-flex; /* NEW flexbox for Safari */
     display: flex;
-    display: -webkit-flex; /* For older Safari */
-    align-items: center;
+    -webkit-box-align: center; /* OLD flexbox */
+    -moz-box-align: center;
+    -ms-flex-align: center;
     -webkit-align-items: center; /* For older Safari */
-    width: min-content;
-    width: -webkit-min-content; /* For older Safari */
-    width: -moz-min-content; /* For older Firefox */
-    justify-content: center;
+    align-items: center;
+    width: auto; /* Let content determine width */
+    min-width: -webkit-min-content; /* For older Safari */
+    min-width: -moz-min-content; /* For older Firefox */
+    min-width: min-content;
+    -webkit-box-pack: center; /* OLD flexbox */
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
     -webkit-justify-content: center; /* For older Safari */
-    flex-wrap: nowrap;
+    justify-content: center;
+    -webkit-box-orient: horizontal; /* OLD flexbox */
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -webkit-flex-direction: row; /* NEW flexbox */
+    -ms-flex-direction: row;
+    flex-direction: row;
     -webkit-flex-wrap: nowrap; /* For older Safari */
+    flex-wrap: nowrap;
     gap: 0 2rem;
     font-size: 0.875rem;
     white-space: nowrap;
@@ -199,6 +220,12 @@ nav {
       margin: 0; /* Reset any default margins */
       padding: 0; /* Reset any default padding */
       display: inline-block; /* Fallback for flex items in older browsers */
+      -webkit-box-flex: 0; /* OLD flexbox */
+      -moz-box-flex: 0;
+      -webkit-flex: 0 0 auto; /* NEW flexbox */
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      float: left; /* Ultimate fallback for ancient browsers */
     }
     /* Fallback for gap property in older browsers */
     li:not(:last-child) {
@@ -249,9 +276,61 @@ nav {
   }
 }
 
+/* Clearfix for float fallback */
+nav ul::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 /* Hide scrollbars in WebKit browsers */
 nav::-webkit-scrollbar {
   display: none;
+  height: 0;
+  width: 0;
+}
+
+/* Additional iOS Safari fixes */
+nav {
+  -webkit-transform: translateZ(0); /* Force hardware acceleration */
+  transform: translateZ(0);
+}
+
+/* Specific fix for old iOS Safari navigation scrolling */
+@supports not (gap: 1rem) {
+  /* For browsers that don't support gap */
+  nav ul {
+    display: block; /* Fall back to block */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  
+  nav ul li {
+    display: inline-block;
+    float: none; /* Override float */
+    vertical-align: middle;
+  }
+}
+
+/* iOS-specific media query for old iPads */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  nav {
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  nav ul {
+    display: block !important;
+    white-space: nowrap !important;
+    padding-left: 1.5em !important;
+    padding-right: 1.5em !important;
+  }
+  
+  nav ul li {
+    display: inline-block !important;
+    float: none !important;
+  }
 }
 
 @keyframes opacity-transform {
