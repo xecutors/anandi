@@ -227,23 +227,15 @@ nav {
       flex: 0 0 auto;
       float: left; /* Ultimate fallback for ancient browsers */
     }
-    /* Fallback for gap property in older browsers */
+    
+    /* Default margin fallback - will be overridden by @supports rules */
     li:not(:last-child) {
       margin-right: 2rem;
     }
-    
-    /* Additional explicit spacing for stubborn browsers */
-    li + li {
-      margin-left: 2rem;
-    }
-    
     @media (max-width: 767px) { /* Changed to max-width for older browser support */
       gap: 0 1.75rem;
       li:not(:last-child) {
         margin-right: 1.75rem;
-      }
-      li + li {
-        margin-left: 1.75rem;
       }
     }
   }
@@ -305,7 +297,15 @@ nav {
   transform: translateZ(0);
 }
 
-/* Specific fix for old iOS Safari navigation scrolling */
+/* Modern browsers with gap support */
+@supports (gap: 1rem) {
+  nav ul li {
+    margin-right: 0 !important; /* Reset margins when gap is supported */
+    margin-left: 0 !important;
+  }
+}
+
+/* Specific fix for old browsers without gap support */
 @supports not (gap: 1rem) {
   /* For browsers that don't support gap */
   nav ul {
@@ -329,6 +329,9 @@ nav {
   @media (max-width: 767px) {
     nav ul li {
       margin-right: 1.75rem;
+    }
+    nav ul li:last-child {
+      margin-right: 0;
     }
   }
 }
