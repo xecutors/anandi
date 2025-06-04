@@ -22,10 +22,10 @@ body {
   margin: 0;
   background-color: var(--beige);
   color: var(--olivebrown-dark);
-  @media (width < 767px) {
+  @media (max-width: 766px) {
     font-weight: 300;
   }
-  @media (width > 1200px) {
+  @media (min-width: 1201px) {
     font-size: 1.125rem;
   }
 }
@@ -40,7 +40,7 @@ img {
   max-width: 1240px;
   padding-inline: 1rem;
   margin: 60px auto 0;
-  @media (width > 767px) {
+  @media (min-width: 768px) {
     margin-top: 100px;
   }
 }
@@ -150,18 +150,22 @@ address {
 
 nav {
   position: sticky;
+  position: -webkit-sticky; /* For older Safari */
   background-color: rgba(248, 240, 213, 0.4);
   top: 1.5rem;
   backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px); /* For Safari */
   border-radius: 1em;
   z-index: 1;
   overflow-x: auto;
   overflow-y: hidden;
   text-wrap: nowrap;
+  white-space: nowrap; /* Fallback for older browsers */
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
   border: 1.5px solid transparent;
-  @media (width >= 1320px) {
+  @media (min-width: 1320px) { /* Changed to min-width for older browser support */
     width: calc(100% + 2.5rem);
     margin-left: -1.25rem;
     margin-right: -1.25rem;
@@ -169,21 +173,42 @@ nav {
 
   ul {
     list-style-type: none;
+    list-style: none; /* Explicit reset for older browsers */
     margin: 0;
+    padding: 0; /* Reset padding completely first */
     padding-inline: 1.5em;
+    padding-left: 1.5em; /* Fallback for browsers that don't support padding-inline */
+    padding-right: 1.5em; /* Fallback for browsers that don't support padding-inline */
     display: flex;
+    display: -webkit-flex; /* For older Safari */
     align-items: center;
+    -webkit-align-items: center; /* For older Safari */
     width: min-content;
+    width: -webkit-min-content; /* For older Safari */
+    width: -moz-min-content; /* For older Firefox */
     justify-content: center;
+    -webkit-justify-content: center; /* For older Safari */
     flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap; /* For older Safari */
     gap: 0 2rem;
     font-size: 0.875rem;
     white-space: nowrap;
     li {
       list-style: none;
+      list-style-type: none; /* Extra explicit for stubborn browsers */
+      margin: 0; /* Reset any default margins */
+      padding: 0; /* Reset any default padding */
+      display: inline-block; /* Fallback for flex items in older browsers */
     }
-    @media (width < 768px) {
+    /* Fallback for gap property in older browsers */
+    li:not(:last-child) {
+      margin-right: 2rem;
+    }
+    @media (max-width: 767px) { /* Changed to max-width for older browser support */
       gap: 0 1.75rem;
+      li:not(:last-child) {
+        margin-right: 1.75rem;
+      }
     }
   }
   a {
@@ -195,20 +220,26 @@ nav {
     font-weight: 400;
     position: relative;
     transform: scale(1);
+    -webkit-transform: scale(1); /* For older Safari */
     transition: transform 0.3s ease, text-shadow 0.3s ease,
       font-weight 0.3s ease;
+    -webkit-transition: -webkit-transform 0.3s ease, text-shadow 0.3s ease,
+      font-weight 0.3s ease; /* For older Safari */
     will-change: transform, text-shadow;
     &:hover,
     &:focus-visible {
       text-shadow: 1px 4px 8px rgba(0, 0, 0, 0.15);
       transform: scale(1.05);
+      -webkit-transform: scale(1.05); /* For older Safari */
     }
     &.active,
     &.current {
       transform: scale(1.175);
+      -webkit-transform: scale(1.175); /* For older Safari */
       font-weight: 500;
       @media (width >= 1024px) {
         transform: scale(1.15);
+        -webkit-transform: scale(1.15); /* For older Safari */
       }
     }
     &::after {
