@@ -1,9 +1,13 @@
 :root {
-  --primary: #381b0f;
-  --secondary: #f8f0d5;
-  --tertiary: #d4b78f;
+  --olivebrown-dark: #381b0f;
+  --beige: #f8f0d5;
+  --olivebrown: #d4b78f;
   --quaternary: #e5d8ae;
   --withblur: rgba(248, 240, 213, 0.6);
+  --beige: #eee5c4;
+  --olivebrown: #f6eedb;
+  --olivebrown-light: #efdeb7;
+  --olivebrown-dark: #7f6f49;
 }
 
 html {
@@ -16,12 +20,8 @@ body {
   font-weight: 200;
   line-height: 1.4em;
   margin: 0;
-  background-image: linear-gradient(
-    120deg,
-    var(--tertiary) 0%,
-    var(--quaternary) 100%
-  );
-  color: var(--primary);
+  background-color: var(--beige);
+  color: var(--olivebrown-dark);
   @media (width < 767px) {
     font-weight: 300;
   }
@@ -57,6 +57,9 @@ p {
 ul {
   padding-left: 1em;
   line-height: 1.6;
+  li {
+    list-style-type: circle;
+  }
 }
 
 section li + li {
@@ -128,9 +131,10 @@ h6 {
 
 a {
   -webkit-tap-highlight-color: transparent;
-  color: var(--primary);
+  color: var(--olivebrown-dark);
+  text-decoration: none;
   &:focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--olivebrown-dark);
     outline-offset: 2px;
   }
 }
@@ -156,7 +160,7 @@ nav {
   text-wrap: nowrap;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
-  border: 1.5px solid var(--tertiary);
+  border: 1.5px solid transparent;
   @media (width >= 1320px) {
     width: calc(100% + 2.5rem);
     margin-left: -1.25rem;
@@ -175,6 +179,9 @@ nav {
     gap: 0 2rem;
     font-size: 0.875rem;
     white-space: nowrap;
+    li {
+      list-style: none;
+    }
     @media (width < 768px) {
       gap: 0 1.75rem;
     }
@@ -183,7 +190,7 @@ nav {
     display: block;
     padding: 0.625em 0;
     width: auto;
-    color: var(--primary);
+    color: var(--olivebrown-dark);
     text-decoration: none;
     font-weight: 400;
     position: relative;
@@ -198,9 +205,8 @@ nav {
     }
     &.active,
     &.current {
-      transform: scale(1.2);
+      transform: scale(1.175);
       font-weight: 500;
-      text-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
       @media (width >= 1024px) {
         transform: scale(1.15);
       }
@@ -279,7 +285,7 @@ nav::-webkit-scrollbar {
       transform: translateX(0);
       padding-inline: 0.5em;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      width: 80%;
+      width: fit-content;
     }
   }
 }
@@ -342,8 +348,8 @@ nav::-webkit-scrollbar {
 button {
   font-family: "Poppins", sans-serif;
   padding: 1rem;
-  background-color: var(--primary);
-  color: var(--secondary);
+  background-color: var(--olivebrown-dark);
+  color: var(--beige);
   border: none;
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -351,9 +357,14 @@ button {
   transition: background-color 0.3s ease;
   &:hover,
   &:focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--olivebrown-dark);
     outline-offset: 2px;
   }
+}
+
+.booking-button {
+  border: 1px solid var(--olivebrown-dark);
+  max-width: 300px;
 }
 
 .icon-whatsapp {
@@ -430,10 +441,14 @@ svg.om {
   justify-content: space-between;
 }
 
+.justify-content-center {
+  justify-content: center;
+}
+
 .grid-col-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15em), 1fr));
-  gap: 2em;
+  gap: 4em;
 }
 
 .self-end {
@@ -455,7 +470,8 @@ img.portrait {
   max-width: 100%;
   display: block;
   @media (width > 920px) {
-    width: 800px;
+    margin-top: 135px;
+    width: 440px;
   }
 }
 
@@ -469,46 +485,12 @@ img.trio {
   }
 }
 
-/* 
-body.hair,
-body.ayurveda {
-  background-image: none !important;
-}
-
-body.hair {
-  color: var(--secondary);
-  background-color: #7e5a76 !important;
-  .button {
-    background-color: #56204a;
-    color: var(--secondary);
-  }
-  nav {
-    border: 1px solid var(--secondary);
-    a {
-      color: var(--secondary);
-    }
-  }
-}
-
-body.ayurveda {
-  color: #232323;
-  background-color: #e8dbe5 !important;
-  .button {
-    background-color: #7e5a76;
-  }
-  nav {
-    border: 1px solid #232323;
-  }
-} */
-
 @media (prefers-reduced-motion: no-preference) {
   img.fuessli {
     transform: translateY(-30px);
     transition: all 0.3s ease;
     opacity: 0.5;
     animation: fuessle linear both;
-    animation-timeline: view();
-    animation-range: 10px 20%;
   }
 
   @keyframes fuessle {
@@ -611,6 +593,8 @@ form {
   flex-direction: column;
   gap: 1.5rem;
   flex-wrap: wrap;
+  max-width: 600px;
+  margin-inline: auto;
 }
 
 .grid {
@@ -631,22 +615,22 @@ input[type="email"],
 input[type="tel"],
 textarea {
   padding: 0.8rem;
-  border: 1px solid var(--tertiary);
+  border: 1px solid var(--olivebrown-dark);
   border-radius: 0.5rem;
   font-size: 1rem;
-  background-color: var(--secondary);
+  background-color: var(--beige);
   font-family: "Poppins", sans-serif;
   &:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: var(--olivebrown-dark);
   }
 }
 
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  background-color: var(--secondary);
-  border: 2px solid var(--tertiary);
+  background-color: var(--beige);
+  border: 2px solid var(--olivebrown-dark);
   padding: 6px;
   border-radius: 4px;
   display: inline-block;
@@ -659,13 +643,13 @@ input[type="checkbox"] {
   transition: all 0.3s ease;
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px var(--primary);
+    box-shadow: 0 0 0 2px var(--olivebrown-dark);
   }
 }
 
 input[type="checkbox"]:checked {
-  background-color: var(--primary);
-  border-color: var(--primary);
+  background-color: var(--olivebrown-dark);
+  border-color: var(--olivebrown-dark);
 }
 
 input[type="checkbox"]:checked::after {
@@ -681,8 +665,8 @@ input:-webkit-autofill,
 input:-webkit-autofill:active,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:hover {
-  border: 2px solid var(--primary) !important;
-  box-shadow: inset 0 0 0 30px var(--secondary) !important;
+  border: 2px solid var(--olivebrown-dark) !important;
+  box-shadow: inset 0 0 0 30px var(--beige) !important;
 }
 
 label {
@@ -692,8 +676,7 @@ label {
 }
 
 fieldset {
-  background-color: var(--quaternary);
-  border: none;
+  border: 1px solid var(--olivebrown-dark);
   padding: 1rem;
   border-radius: 0.5rem;
   display: flex;
@@ -710,4 +693,12 @@ legend {
 
 label {
   font-size: 1rem;
+}
+
+.qualicert {
+  opacity: 0.5;
+}
+
+.link {
+  font-size: 1.5rem;
 }
