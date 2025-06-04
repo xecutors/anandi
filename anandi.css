@@ -151,7 +151,7 @@ address {
 nav {
   position: sticky;
   position: -webkit-sticky; /* For older Safari */
-  background-color: rgba(248, 240, 213, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
   top: 1.5rem;
   backdrop-filter: blur(9px);
   -webkit-backdrop-filter: blur(9px); /* For Safari */
@@ -169,12 +169,6 @@ nav {
   width: 100%; /* Explicit width for old browsers */
   max-width: 100%; /* Prevent overflow */
   box-sizing: border-box; /* Include padding and border in width */
-  @media (min-width: 1320px) { /* Changed to min-width for older browser support */
-    width: calc(100% + 2.5rem);
-    margin-left: -1.25rem;
-    margin-right: -1.25rem;
-  }
-
   ul {
     list-style-type: none;
     list-style: none; /* Explicit reset for older browsers */
@@ -227,12 +221,13 @@ nav {
       flex: 0 0 auto;
       float: left; /* Ultimate fallback for ancient browsers */
     }
-    
+
     /* Default margin fallback - will be overridden by @supports rules */
     li:not(:last-child) {
       margin-right: 2rem;
     }
-    @media (max-width: 767px) { /* Changed to max-width for older browser support */
+    @media (max-width: 767px) {
+      /* Changed to max-width for older browser support */
       gap: 0 1.75rem;
       li:not(:last-child) {
         margin-right: 1.75rem;
@@ -265,7 +260,7 @@ nav {
       transform: scale(1.175);
       -webkit-transform: scale(1.175); /* For older Safari */
       font-weight: 500;
-      @media (width >= 1024px) {
+      @media (min-width: 1024px) {
         transform: scale(1.15);
         -webkit-transform: scale(1.15); /* For older Safari */
       }
@@ -314,18 +309,18 @@ nav {
     overflow-y: hidden;
     white-space: nowrap;
   }
-  
+
   nav ul li {
     display: inline-block;
     float: none; /* Override float */
     vertical-align: middle;
     margin-right: 2rem; /* Ensure spacing */
   }
-  
+
   nav ul li:last-child {
     margin-right: 0; /* Remove margin from last item */
   }
-  
+
   @media (max-width: 767px) {
     nav ul li {
       margin-right: 1.75rem;
@@ -342,20 +337,20 @@ nav {
     overflow-x: scroll !important;
     -webkit-overflow-scrolling: touch !important;
   }
-  
+
   nav ul {
     display: block !important;
     white-space: nowrap !important;
     padding-left: 1.5em !important;
     padding-right: 1.5em !important;
   }
-  
+
   nav ul li {
     display: inline-block !important;
     float: none !important;
     margin-right: 2rem !important; /* Ensure spacing between items */
   }
-  
+
   nav ul li:last-child {
     margin-right: 0 !important; /* Remove margin from last item */
   }
@@ -640,23 +635,24 @@ img.trio {
 }
 
 .trio-image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(50%, 8em), 1fr));
-  gap: 1.5em;
-  justify-content: center;
+  /* CSS Columns for masonry layout - always 2 columns */
+  column-count: 2;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-gap: 1.5em;
+  -webkit-column-gap: 1.5em;
+  -moz-column-gap: 1.5em;
   margin-bottom: 10rem;
-  @media (width < 768px) {
-    img {
-      margin-block: 0;
-    }
-  }
-  @media (width > 767px) {
-    img:nth-child(2) {
-      margin-top: 5rem;
-    }
-    img:nth-child(3) {
-      margin-top: -2.5rem;
-    }
+
+  /* Prevent images from breaking across columns */
+  img {
+    display: block;
+    width: 100%;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 1.5em;
+    margin-top: 0;
   }
 }
 
@@ -711,7 +707,7 @@ img.trio {
   }
 }
 
-/* nav {
+nav {
   overflow-x: scroll;
   mask: linear-gradient(
     to right,
@@ -722,7 +718,7 @@ img.trio {
   animation: scrollfade;
   animation-timeline: --scrollfade;
   scroll-timeline: --scrollfade x;
-} */
+}
 
 /* Form styles */
 
