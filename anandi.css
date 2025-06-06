@@ -144,8 +144,8 @@ address {
 }
 
 .shadow {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.12),
+    0 4px 6px -4px rgba(127, 111, 73, 0.08);
 }
 
 nav {
@@ -159,16 +159,24 @@ nav {
   z-index: 1;
   overflow-x: auto;
   overflow-y: hidden;
-  overflow: auto; /* Fallback for very old browsers */
   text-wrap: nowrap;
   white-space: nowrap; /* Fallback for older browsers */
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
   border: 1.5px solid transparent;
-  width: 100%; /* Explicit width for old browsers */
+  width: fit-content; /* Always fit content width */
   max-width: 100%; /* Prevent overflow */
   box-sizing: border-box; /* Include padding and border in width */
+  box-shadow: none; /* Initial state for animation */
+  transform: translateX(0); /* Initial transform state */
+  will-change: transform; /* Optimize for transform animations */
+
+  /* Large screens: offset container padding for centering animation */
+  @media (min-width: 1024px) {
+    margin-left: -1rem;
+  }
+
   ul {
     list-style-type: none;
     list-style: none; /* Explicit reset for older browsers */
@@ -243,26 +251,20 @@ nav {
     font-weight: 400;
     position: relative;
     transform: scale(1);
-    -webkit-transform: scale(1); /* For older Safari */
     transition: transform 0.3s ease, text-shadow 0.3s ease,
       font-weight 0.3s ease;
-    -webkit-transition: -webkit-transform 0.3s ease, text-shadow 0.3s ease,
-      font-weight 0.3s ease; /* For older Safari */
     will-change: transform, text-shadow;
     &:hover,
     &:focus-visible {
-      text-shadow: 1px 4px 8px rgba(0, 0, 0, 0.15);
+      text-shadow: 1px 4px 8px rgba(127, 111, 73, 0.2);
       transform: scale(1.05);
-      -webkit-transform: scale(1.05); /* For older Safari */
     }
     &.active,
     &.current {
       transform: scale(1.175);
-      -webkit-transform: scale(1.175); /* For older Safari */
       font-weight: 500;
       @media (min-width: 1024px) {
         transform: scale(1.15);
-        -webkit-transform: scale(1.15); /* For older Safari */
       }
     }
     &::after {
@@ -403,22 +405,40 @@ nav {
   }
 }
 
-@media (width > 767px) {
+/* Large screens: animation with centering */
+@media (min-width: 1024px) {
   @keyframes nav-animation {
     from {
       box-shadow: none;
       background-color: transparent;
-      transform: translateX(-1rem);
-      width: 100%;
+      border: 1.5px solid transparent;
+      transform: translateX(0);
     }
     to {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.15),
+        0 4px 6px -4px rgba(127, 111, 73, 0.1);
       background-color: var(--withblur);
-      transform: translateX(0);
-      padding-inline: 0.5em;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      width: fit-content;
+      transform: translateX(40%);
+    }
+  }
+}
+
+/* Small/medium screens: animation without centering, stay left */
+@media (max-width: 1023px) {
+  @keyframes nav-animation {
+    from {
+      box-shadow: none;
+      background-color: transparent;
+      border: 1.5px solid transparent;
+      transform: translateX(0);
+    }
+    to {
+      box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.15),
+        0 4px 6px -4px rgba(127, 111, 73, 0.1);
+      background-color: var(--withblur);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transform: translateX(0);
     }
   }
 }
@@ -429,6 +449,11 @@ nav {
       animation: nav-animation linear both;
       animation-timeline: scroll();
       animation-range: 150px 600px;
+    }
+
+    nav ul {
+      animation: scrollfade;
+      animation-timeline: --scrollfade;
     }
   }
 }
@@ -635,7 +660,6 @@ img.trio {
 }
 
 .trio-image-grid {
-  /* CSS Columns for masonry layout - always 2 columns */
   column-count: 2;
   -webkit-column-count: 2;
   -moz-column-count: 2;
@@ -644,7 +668,6 @@ img.trio {
   -moz-column-gap: 1.5em;
   margin-bottom: 10rem;
 
-  /* Prevent images from breaking across columns */
   img {
     display: block;
     width: 100%;
@@ -707,16 +730,17 @@ img.trio {
   }
 }
 
-nav {
-  overflow-x: scroll;
+nav ul {
   mask: linear-gradient(
     to right,
     #0000,
-    #ffff var(--left-fade) calc(100% - var(--right-fade)),
+    #ffff var(--left-fade, 0) calc(100% - var(--right-fade, 0)),
     #0000
   );
-  animation: scrollfade;
-  animation-timeline: --scrollfade;
+}
+
+nav {
+  overflow-x: scroll;
   scroll-timeline: --scrollfade x;
 }
 

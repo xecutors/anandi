@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <title>Anandi Hairspa - Service Kalkulator</title>
+    <meta name="theme-color" content="#d4b78f" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Service Kalkulator für Anandi Hairspa">
+    <link href="/anandi.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        .calculator {
+            background: var(--olivebrown-light);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .service-category {
+            margin-bottom: 2rem;
+        }
+        
+        .service-category h3 {
+            color: var(--olivebrown-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .service-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .service-item:hover {
+            background: rgba(239, 222, 183, 0.3);
+            border-color: var(--olivebrown-dark);
+        }
+        
+        .service-item.selected {
+            background: rgba(239, 222, 183, 0.5);
+            border-color: var(--olivebrown-dark);
+        }
+        
+        .service-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .service-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .service-name {
+            font-weight: 500;
+            color: var(--olivebrown-dark);
+        }
+        
+        .service-price {
+            font-size: 0.9rem;
+            color: var(--olivebrown-dark);
+        }
+        
+        .service-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .service-controls label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .service-controls input[type="number"] {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid var(--olivebrown-dark);
+            border-radius: 5px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .service-controls input[type="number"]:focus {
+            outline: none;
+            border-color: #7f6f49;
+            box-shadow: 0 0 0 2px rgba(127, 111, 73, 0.2);
+        }
+        
+        .total-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .total-row.final {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--olivebrown-dark);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--olivebrown-dark);
+        }
+        
+        .bill-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .bill-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--olivebrown-dark);
+        }
+        
+        .bill-header h2 {
+            color: var(--olivebrown-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .bill-items {
+            margin-bottom: 2rem;
+        }
+        
+        .bill-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .bill-item:last-child {
+            border-bottom: none;
+        }
+        
+        .bill-total {
+            padding-top: 2rem;
+            border-top: 2px solid var(--olivebrown-dark);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: var(--olivebrown-dark);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6f5f39;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .discount-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--olivebrown-light);
+            border-radius: 5px;
+            border: 2px solid var(--olivebrown-dark);
+        }
+        
+        .discount-section label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--olivebrown-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .discount-section input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .service-item {
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto auto;
+            }
+            
+            .service-controls {
+                grid-column: 1 / -1;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+            
+            .bill-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .bill-container, .bill-container * {
+                visibility: visible;
+            }
+            .bill-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+            .buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="hair">
+    <div class="container">
+        <nav class="d-flex justify-content-between gap-3">
+            <ul>
+                <li><a href="/hairspa">Hairspa</a></li>
+                <li><a class="current" href="#">Kalkulator</a></li>
+            </ul>
+            <ul>
+                <li><a href="/">Yoga</a></li>
+            </ul>
+        </nav>
+        
+        <section class="animated">
+            <h1>Service Kalkulator</h1>
+            
+            <div class="calculator">
+                <div class="service-category">
+                    <h3>Schnitt Services</h3>
+                    <div class="service-item" data-service="ladies-cut" data-price="135">
+                        <input type="checkbox" name="service" value="ladies-cut">
+                        <div class="service-details">
+                            <span class="service-name">Ladies Cut</span>
+                            <span class="service-price">CHF 135 (Basis: 60 Min.)</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-ladies-cut" min="30" max="180" value="60" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="mens-cut" data-price="90">
+                        <input type="checkbox" name="service" value="mens-cut">
+                        <div class="service-details">
+                            <span class="service-name">Men's Cut</span>
+                            <span class="service-price">CHF 90 (Basis: 45 Min.)</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-mens-cut" min="30" max="120" value="45" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="brushing" data-price="45">
+                        <input type="checkbox" name="service" value="brushing">
+                        <div class="service-details">
+                            <span class="service-name">Combi-Brushing</span>
+                            <span class="service-price">CHF 45</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-brushing" min="20" max="60" value="30" step="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-category">
+                    <h3>Colorservice</h3>
+                    <div class="service-item" data-service="farbservice" data-price="165">
+                        <input type="checkbox" name="service" value="farbservice">
+                        <div class="service-details">
+                            <span class="service-name">Farbservice</span>
+                            <span class="service-price">CHF 165/Stunde</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-farbservice" min="60" max="300" value="120" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="highlights" data-price="165">
+                        <input type="checkbox" name="service" value="highlights">
+                        <div class="service-details">
+                            <span class="service-name">Highlights</span>
+                            <span class="service-price">CHF 165/Stunde</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-highlights" min="60" max="300" value="120" step="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-category">
+                    <h3>Treatments & Specials</h3>
+                    <div class="service-item" data-service="massage" data-price="45">
+                        <input type="checkbox" name="service" value="massage">
+                        <div class="service-details">
+                            <span class="service-name">Relaxing Chakra-Headmassage</span>
+                            <span class="service-price">CHF 45 (30 Min.)</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-massage" min="30" max="60" value="30" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="smoothing" data-price="135">
+                        <input type="checkbox" name="service" value="smoothing">
+                        <div class="service-details">
+                            <span class="service-name">Cysteine Smoothing-Treatment</span>
+                            <span class="service-price">CHF 135/Stunde</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-smoothing" min="60" max="300" value="120" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="silk-protein" data-price="120">
+                        <input type="checkbox" name="service" value="silk-protein">
+                        <div class="service-details">
+                            <span class="service-name">Organisches Seidenprotein-Treatment</span>
+                            <span class="service-price">CHF 120 (Basis: 45 Min.)</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-silk-protein" min="30" max="90" value="45" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="amino-treatment" data-price="150">
+                        <input type="checkbox" name="service" value="amino-treatment">
+                        <div class="service-details">
+                            <span class="service-name">Veganes Aminosäuren-Treatment</span>
+                            <span class="service-price">CHF 150 (Basis: 60 Min.)</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-amino-treatment" min="45" max="120" value="60" step="1">
+                        </div>
+                    </div>
+                    <div class="service-item" data-service="gloss-treatment" data-price="90">
+                        <input type="checkbox" name="service" value="gloss-treatment">
+                        <div class="service-details">
+                            <span class="service-name">Soja- und Weizenprotein-Gloss</span>
+                            <span class="service-price">CHF 90 (Basis: 45 Min.)</span>
+                        </div>
+                        <div class="service-controls">
+                            <label>Minuten:</label>
+                            <input type="number" name="minutes-gloss-treatment" min="30" max="90" value="45" step="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="discount-section">
+                    <label>
+                        <input type="checkbox" id="student-discount">
+                        Studierendenrabatt (20%)
+                    </label>
+                </div>
+                
+                <div class="total-section">
+                    <div class="total-row">
+                        <span>Zwischensumme:</span>
+                        <span id="subtotal">CHF 0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Rabatt:</span>
+                        <span id="discount">CHF 0.00</span>
+                    </div>
+                    <div class="total-row final">
+                        <span>Total:</span>
+                        <span id="total">CHF 0.00</span>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn-primary" onclick="generateBill()">Rechnung erstellen</button>
+                    <button class="btn-secondary" onclick="resetCalculator()">Zurücksetzen</button>
+                </div>
+            </div>
+            
+            <div class="bill-container" id="bill">
+                <div class="bill-header">
+                    <h2>Anandi Hairspa</h2>
+                    <p>Yves Coiffure<br>
+                    Rennweg 9<br>
+                    8001 Zürich</p>
+                    <p>Tel: +41 77 482 13 06</p>
+                    <hr>
+                    <p>Rechnung</p>
+                    <p id="bill-date"></p>
+                </div>
+                
+                <div class="bill-items" id="bill-items">
+                </div>
+                
+                <div class="bill-total">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Zwischensumme:</span>
+                        <span id="bill-subtotal">CHF 0</span>
+                    </div>
+                    <div id="bill-discount-row" style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                        <span>Studierendenrabatt (20%):</span>
+                        <span id="bill-discount">CHF 0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-size: 1.5rem;">
+                        <span>Total:</span>
+                        <span id="bill-total">CHF 0</span>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn-primary" onclick="window.print()">Drucken</button>
+                    <button class="btn-secondary" onclick="closeBill()">Schliessen</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        const services = {
+            'ladies-cut': { name: 'Ladies Cut', basePrice: 135, baseMinutes: 60 },
+            'brushing': { name: 'Combi-Brushing', basePrice: 45, baseMinutes: 30 },
+            'mens-cut': { name: "Men's Cut", basePrice: 90, baseMinutes: 45 },
+            'farbservice': { name: 'Farbservice', basePrice: 165, baseMinutes: 60, hourly: true },
+            'highlights': { name: 'Highlights', basePrice: 165, baseMinutes: 60, hourly: true },
+            'massage': { name: 'Relaxing Chakra-Headmassage', basePrice: 45, baseMinutes: 30 },
+            'smoothing': { name: 'Cysteine Smoothing-Treatment', basePrice: 135, baseMinutes: 60, hourly: true },
+            'silk-protein': { name: 'Organisches Seidenprotein-Treatment', basePrice: 120, baseMinutes: 45 },
+            'amino-treatment': { name: 'Veganes Aminosäuren-Treatment', basePrice: 150, baseMinutes: 60 },
+            'gloss-treatment': { name: 'Soja- und Weizenprotein-Gloss', basePrice: 90, baseMinutes: 45 }
+        };
+        
+        document.querySelectorAll('.service-item').forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            const minutesInput = item.querySelector('input[type="number"]');
+            
+            item.addEventListener('click', (e) => {
+                if (e.target.type !== 'checkbox' && e.target.type !== 'number') {
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+            
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+                calculateTotal();
+            });
+            
+            if (minutesInput) {
+                minutesInput.addEventListener('change', calculateTotal);
+                minutesInput.addEventListener('click', (e) => e.stopPropagation());
+            }
+        });
+        
+        document.getElementById('student-discount').addEventListener('change', calculateTotal);
+        
+        function calculateServicePrice(service, minutes) {
+            if (service.hourly) {
+                // For hourly services, calculate based on hourly rate
+                return (service.basePrice / 60) * minutes;
+            } else {
+                // For fixed services, calculate proportionally based on time
+                const ratio = minutes / service.baseMinutes;
+                return service.basePrice * ratio;
+            }
+        }
+        
+        function calculateTotal() {
+            let subtotal = 0;
+            
+            document.querySelectorAll('.service-item').forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox.checked) {
+                    const service = services[checkbox.value];
+                    const minutesInput = item.querySelector('input[type="number"][name^="minutes-"]');
+                    const minutes = parseInt(minutesInput.value);
+                    
+                    const price = calculateServicePrice(service, minutes);
+                    subtotal += price;
+                }
+            });
+            
+            const hasDiscount = document.getElementById('student-discount').checked;
+            const discount = hasDiscount ? subtotal * 0.2 : 0;
+            const total = subtotal - discount;
+            
+            document.getElementById('subtotal').textContent = `CHF ${subtotal.toFixed(2)}`;
+            document.getElementById('discount').textContent = `CHF -${discount.toFixed(2)}`;
+            document.getElementById('total').textContent = `CHF ${total.toFixed(2)}`;
+        }
+        
+        function formatMinutes(minutes) {
+            if (minutes < 60) {
+                return `${minutes} Min.`;
+            } else {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                if (mins === 0) {
+                    return `${hours} ${hours === 1 ? 'Stunde' : 'Stunden'}`;
+                } else {
+                    return `${hours} ${hours === 1 ? 'Stunde' : 'Stunden'} ${mins} Min.`;
+                }
+            }
+        }
+        
+        function generateBill() {
+            const selectedServices = [];
+            let subtotal = 0;
+            
+            document.querySelectorAll('.service-item').forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox.checked) {
+                    const service = services[checkbox.value];
+                    const minutesInput = item.querySelector('input[type="number"][name^="minutes-"]');
+                    const minutes = parseInt(minutesInput.value);
+                    
+                    const price = calculateServicePrice(service, minutes);
+                    const timeStr = formatMinutes(minutes);
+                    const description = `${service.name} (${timeStr})`;
+                    
+                    selectedServices.push({ description, price, minutes });
+                    subtotal += price;
+                }
+            });
+            
+            if (selectedServices.length === 0) {
+                alert('Bitte wählen Sie mindestens einen Service aus.');
+                return;
+            }
+            
+            const billItems = document.getElementById('bill-items');
+            billItems.innerHTML = '';
+            
+            selectedServices.forEach(service => {
+                const item = document.createElement('div');
+                item.className = 'bill-item';
+                item.innerHTML = `
+                    <span>${service.description}</span>
+                    <span>${service.minutes} Min.</span>
+                    <span>CHF ${service.price.toFixed(2)}</span>
+                `;
+                billItems.appendChild(item);
+            });
+            
+            const hasDiscount = document.getElementById('student-discount').checked;
+            const discount = hasDiscount ? subtotal * 0.2 : 0;
+            const total = subtotal - discount;
+            
+            document.getElementById('bill-subtotal').textContent = `CHF ${subtotal.toFixed(2)}`;
+            document.getElementById('bill-discount').textContent = `CHF -${discount.toFixed(2)}`;
+            document.getElementById('bill-total').textContent = `CHF ${total.toFixed(2)}`;
+            document.getElementById('bill-discount-row').style.display = hasDiscount ? 'flex' : 'none';
+            
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('de-CH', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            document.getElementById('bill-date').textContent = dateStr;
+            
+            document.querySelector('.calculator').style.display = 'none';
+            document.getElementById('bill').style.display = 'block';
+        }
+        
+        function closeBill() {
+            document.getElementById('bill').style.display = 'none';
+            document.querySelector('.calculator').style.display = 'block';
+        }
+        
+        function resetCalculator() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+                cb.dispatchEvent(new Event('change'));
+            });
+            
+            // Reset to default values
+            document.querySelector('input[name="minutes-ladies-cut"]').value = 60;
+            document.querySelector('input[name="minutes-mens-cut"]').value = 45;
+            document.querySelector('input[name="minutes-brushing"]').value = 30;
+            document.querySelector('input[name="minutes-farbservice"]').value = 120;
+            document.querySelector('input[name="minutes-highlights"]').value = 120;
+            document.querySelector('input[name="minutes-massage"]').value = 30;
+            document.querySelector('input[name="minutes-smoothing"]').value = 120;
+            document.querySelector('input[name="minutes-silk-protein"]').value = 45;
+            document.querySelector('input[name="minutes-amino-treatment"]').value = 60;
+            document.querySelector('input[name="minutes-gloss-treatment"]').value = 45;
+            
+            document.getElementById('student-discount').checked = false;
+            
+            calculateTotal();
+        }
+        
+        // Initialize with zero totals
+        calculateTotal();
+    </script>
+</body>
+</html>
