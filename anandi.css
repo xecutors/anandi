@@ -30,6 +30,10 @@
   initial-value: 0;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 /* ==========================================================================
    Base Elements
    ========================================================================== */
@@ -359,6 +363,8 @@ nav ul::after {
   content: "";
   display: table;
   clear: both;
+  display: none; /* Hide in modern browsers */
+  visibility: hidden;
 }
 
 /* Hide scrollbars in WebKit browsers */
