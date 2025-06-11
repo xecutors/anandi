@@ -540,9 +540,8 @@ form {
 }
 
 fieldset {
-  border: 1px solid var(--olivebrown-dark);
-  padding: 1rem;
-  border-radius: 0.5rem;
+  border: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -550,7 +549,7 @@ fieldset {
 }
 
 legend {
-  font-weight: bold;
+  font-weight: 500;
   font-family: "Poppins", sans-serif;
   margin-bottom: 0.5rem;
 }
@@ -612,12 +611,15 @@ input[type="checkbox"]:checked {
 }
 
 input[type="checkbox"]:checked::after {
-  content: "✔";
-  color: white;
-  font-size: 0.85rem;
+  content: "";
   position: absolute;
-  top: -1px;
-  left: 2px;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
 }
 
 /* Autofill styling */
