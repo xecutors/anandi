@@ -405,51 +405,40 @@ nav {
   }
 }
 
-/* Large screens: animation with centering */
-@media (min-width: 1024px) {
-  @keyframes nav-animation {
-    from {
-      box-shadow: none;
-      background-color: transparent;
-      border: 1.5px solid transparent;
-      transform: translateX(0);
-    }
-    to {
-      box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.15),
-        0 4px 6px -4px rgba(127, 111, 73, 0.1);
-      background-color: var(--withblur);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transform: translateX(1rem);
+:root {
+  /* default for large screens */
+  --nav-from-x: 0;
+  --nav-to-x: 1rem;
+}
+
+@media (max-width: 1023px) {
+  /* on smaller screens, slide only from 0→0 */
+  :root {
+    --nav-to-x: 0;
+  }
+}
+@media (max-width: 1023px) {
+  @supports (animation-timeline: scroll()) {
+    :root {
+      --nav-from-x: -1rem;
+      --nav-to-x: 0;
     }
   }
 }
 
-/* Small/medium screens: animation without centering, stay left */
-@media (max-width: 1023px) {
-  @keyframes nav-animation {
-    from {
-      box-shadow: none;
-      background-color: transparent;
-      border: 1.5px solid transparent;
-      transform: translateX(0);
-    }
-    to {
-      box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.15),
-        0 4px 6px -4px rgba(127, 111, 73, 0.1);
-      background-color: var(--withblur);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transform: translateX(0);
-    }
+@keyframes nav-animation {
+  from {
+    box-shadow: none;
+    background-color: transparent;
+    border: 1.5px solid transparent;
+    transform: translateX(var(--nav-from-x));
   }
-  @supports (animation-timeline: scroll()) {
-    @keyframes nav-animation {
-      from {
-        transform: translateX(-1rem) !important;
-      }
-      to {
-        transform: translateX(0) !important;
-      }
-    }
+  to {
+    box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.15),
+      0 4px 6px -4px rgba(127, 111, 73, 0.1);
+    background-color: var(--withblur);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    transform: translateX(var(--nav-to-x));
   }
 }
 
