@@ -206,13 +206,12 @@ section {
    Navigation
    ========================================================================== */
 nav {
-  position: sticky;
-  position: -webkit-sticky; /* For older Safari */
-  background-color: rgba(255, 255, 255, 0.3);
-  top: 1.5rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* For Safari */
-  border-radius: 1em;
+  position: relative;
+  background: transparent; /* Initial state - no background */
+  background-color: transparent; /* Fallback */
+  backdrop-filter: none; /* No filter initially */
+  -webkit-backdrop-filter: none; /* For Safari */
+  border-radius: 1.5em;
   z-index: 1;
   overflow-x: auto;
   overflow-y: hidden;
@@ -221,17 +220,19 @@ nav {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-  border: 1.5px solid transparent;
+  border: 1px solid transparent; /* No border initially */
   width: fit-content; /* Always fit content width */
   max-width: 100%; /* Prevent overflow */
   box-sizing: border-box; /* Include padding and border in width */
-  box-shadow: none; /* Initial state for animation */
+  box-shadow: none; /* No shadow initially */
   transform: translateX(0); /* Initial transform state */
-  will-change: transform; /* Optimize for transform animations */
+  will-change: transform, backdrop-filter, background, box-shadow, border; /* Optimize for animations */
   overflow-x: scroll;
   scroll-timeline: --scrollfade x;
   -webkit-transform: translateZ(0); /* Force hardware acceleration */
   transform: translateZ(0);
+  transition: backdrop-filter 0.3s ease, box-shadow 0.3s ease,
+    background 0.3s ease, border 0.3s ease, padding 0.3s ease;
 }
 
 /* Large screens: offset container padding for centering animation */
@@ -247,9 +248,7 @@ nav ul {
   list-style: none; /* Explicit reset for older browsers */
   margin: 0;
   padding: 0; /* Reset padding completely first */
-  padding-inline: 1.5em;
-  padding-left: 1.5em; /* Fallback for browsers that don't support padding-inline */
-  padding-right: 1.5em; /* Fallback for browsers that don't support padding-inline */
+  padding-block: 0.5em; /* Add vertical padding */
   display: -webkit-box; /* OLD flexbox for Safari */
   display: -moz-box; /* OLD flexbox for Firefox */
   display: -ms-flexbox; /* IE 10 */
@@ -278,7 +277,7 @@ nav ul {
   flex-direction: row;
   -webkit-flex-wrap: nowrap; /* For older Safari */
   flex-wrap: nowrap;
-  gap: 0 2rem;
+  gap: 0 1rem;
   font-size: 0.875rem;
   white-space: nowrap;
   mask: linear-gradient(
@@ -311,7 +310,26 @@ nav ul li:not(:last-child) {
 @media (max-width: 767px) {
   /* Changed to max-width for older browser support */
   nav ul {
-    gap: 0 1.75rem;
+    gap: 0 0.75rem;
+    /* Enhanced fade for mobile horizontal scrolling */
+    mask: linear-gradient(
+      to right,
+      transparent,
+      rgba(0, 0, 0, 0.1) 10px,
+      black 20px,
+      black calc(100% - 20px),
+      rgba(0, 0, 0, 0.1) calc(100% - 10px),
+      transparent
+    );
+    -webkit-mask: linear-gradient(
+      to right,
+      transparent,
+      rgba(0, 0, 0, 0.1) 10px,
+      black 20px,
+      black calc(100% - 20px),
+      rgba(0, 0, 0, 0.1) calc(100% - 10px),
+      transparent
+    );
   }
 
   nav ul li:not(:last-child) {
@@ -322,34 +340,168 @@ nav ul li:not(:last-child) {
 /* Navigation links */
 nav a {
   display: block;
-  padding: 0.625em 0;
+  padding: 0.625em 1.25em;
   width: auto;
   color: var(--olivebrown-dark);
   text-decoration: none;
   font-weight: 400;
   position: relative;
+  border-radius: 1em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, background-color, box-shadow;
+}
+
+/* Liquid glass hover effect */
+nav a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 1em;
+  background: transparent;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+nav a:hover::before,
+nav a:focus-visible::before {
+  opacity: 1;
   transform: scale(1);
-  transition: transform 0.3s ease, text-shadow 0.3s ease, font-weight 0.3s ease;
-  will-change: transform, text-shadow;
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.05)
+    ),
+    rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    /* Inner highlight */ inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+    /* Inner shadow for depth */ inset 0 -1px 0 0 rgba(0, 0, 0, 0.05),
+    /* Soft outer glow */ 0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
 }
 
 nav a:hover,
 nav a:focus-visible {
-  text-shadow: 1px 4px 8px rgba(127, 111, 73, 0.2);
-  transform: scale(1.05);
+  transform: scale(1.02) translateY(-1px);
+  color: var(--olivebrown-dark);
 }
 
+/* Pressed state for liquid interaction */
+nav a:active {
+  transform: scale(0.98) translateY(0px);
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+nav a:active::before {
+  transform: scale(0.95);
+  opacity: 0.8;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active state - initially minimal */
 nav a.active,
 nav a.current {
-  transform: scale(1.175);
   font-weight: 500;
 }
 
-@media (min-width: 1024px) {
-  nav a.active,
-  nav a.current {
-    transform: scale(1.15);
+/* Active state ::before element - simple approach */
+nav a.active::before,
+nav a.current::before {
+  /* Start hidden */
+  opacity: 0;
+  transform: scale(0.8);
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: all 0.3s ease;
+}
+
+.scrolled nav {
+  padding-inline: 1em;
+}
+
+.nav-wrapper {
+  position: sticky;
+  top: 1.5rem;
+  z-index: 1;
+}
+
+.nav-fade-left,
+.nav-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-fade-left {
+  left: 0;
+  background: linear-gradient(to right, var(--beige), transparent);
+  border-radius: 1.5rem 0 0 1.5rem;
+}
+
+.nav-fade-right {
+  right: 0;
+  background: linear-gradient(to left, var(--beige), transparent);
+  border-radius: 0 1.5rem 1.5rem 0;
+}
+
+.scrolled .nav-fade-left.nav-scrolled,
+.scrolled .nav-fade-right:not(.nav-at-end) {
+  opacity: 1;
+}
+
+/* Show right fade on mobile even when not scrolled */
+@media (max-width: 767px) {
+  .nav-fade-right:not(.nav-at-end) {
+    opacity: 1;
+    width: 60px;
+    background: linear-gradient(to left, var(--beige), rgba(238, 229, 196, 0.3), transparent);
   }
+}
+
+/* Show active state when scrolled - using a class that gets added via JavaScript */
+.scrolled nav a.active::before,
+.scrolled nav a.current::before {
+  opacity: 1;
+  transform: scale(1);
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.1)
+    ),
+    rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    /* Inner highlight */ inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+    /* Inner shadow for depth */ inset 0 -1px 0 0 rgba(0, 0, 0, 0.08),
+    /* Outer border/glow */ 0 0 0 1px rgba(255, 255, 255, 0.3),
+    /* Subtle drop shadow */ 0 2px 8px rgba(0, 0, 0, 0.12),
+    /* Extra outer glow */ 0 0 12px rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px) saturate(3.4);
+  -webkit-backdrop-filter: blur(4px) saturate(1.4);
+}
+
+/* Make nav text darker when scrolled */
+.scrolled nav a {
+  color: var(--olivebrown-dark);
+}
+
+.scrolled nav a {
+  color: #50462f; /* Darker than --olivebrown-dark */
 }
 
 nav a::after {
@@ -372,6 +524,70 @@ nav::-webkit-scrollbar {
   display: none;
   height: 0;
   width: 0;
+}
+
+/* Fallback for browsers without scroll-driven animations */
+@supports not (animation-timeline: scroll()) {
+  nav {
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.2)
+      ),
+      radial-gradient(
+        ellipse at top left,
+        rgba(255, 255, 255, 0.4),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at bottom right,
+        rgba(255, 255, 255, 0.2),
+        transparent 50%
+      );
+    backdrop-filter: blur(16px) saturate(1.8) contrast(1.1) brightness(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8) contrast(1.1)
+      brightness(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      /* Outer shadow for depth */ 0 12px 40px
+        rgba(127, 111, 73, 0.15),
+      /* Glassy edge - top */ inset 0 2px 0 0 rgba(255, 255, 255, 0.35),
+      /* Glassy edge - bottom */ inset 0 -2px 0 0 rgba(255, 255, 255, 0.12),
+      /* Inner glow */ inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    padding-inline: 1em;
+  }
+
+  /* Also show active state immediately */
+  nav a.active::before,
+  nav a.current::before {
+    opacity: 1;
+    transform: scale(1);
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.1)
+      ),
+      rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      /* Inner highlight */ inset 0 1px 0 0
+        rgba(255, 255, 255, 0.5),
+      /* Inner shadow for depth */ inset 0 -1px 0 0 rgba(0, 0, 0, 0.08),
+      /* Outer border/glow */ 0 0 0 1px rgba(255, 255, 255, 0.3),
+      /* Subtle drop shadow */ 0 2px 8px rgba(0, 0, 0, 0.12),
+      /* Extra outer glow */ 0 0 12px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px) saturate(3.4);
+    -webkit-backdrop-filter: blur(4px) saturate(1.4);
+  }
+
+  /* Make nav text darker immediately */
+  nav a {
+    color: #50462f;
+  }
+
+  nav a.active,
+  nav a.current {
+    color: #50462f;
+  }
 }
 
 /* Modern browsers with gap support */
@@ -425,6 +641,8 @@ nav::-webkit-scrollbar {
     white-space: nowrap !important;
     padding-left: 1.5em !important;
     padding-right: 1.5em !important;
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
   }
 
   nav ul li {
@@ -873,16 +1091,48 @@ svg.om {
 @keyframes nav-animation {
   from {
     box-shadow: none;
-    background-color: transparent;
-    border: 1.5px solid transparent;
+    background: transparent;
+    border: 1px solid transparent;
     transform: translateX(var(--nav-from-x));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   to {
-    box-shadow: 0 10px 15px -3px rgba(127, 111, 73, 0.15),
-      0 4px 6px -4px rgba(127, 111, 73, 0.1);
-    background-color: var(--withblur);
-    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      /* Outer shadow for depth */ 0 12px 40px
+        rgba(127, 111, 73, 0.15),
+      /* Glassy edge - top */ inset 0 2px 0 0 rgba(255, 255, 255, 0.35),
+      /* Glassy edge - bottom */ inset 0 -2px 0 0 rgba(255, 255, 255, 0.12),
+      /* Inner glow */ inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.2)
+      ),
+      radial-gradient(
+        ellipse at top left,
+        rgba(255, 255, 255, 0.4),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at bottom right,
+        rgba(255, 255, 255, 0.2),
+        transparent 50%
+      );
+    border: 1px solid rgba(255, 255, 255, 0.25);
     transform: translateX(var(--nav-to-x));
+    backdrop-filter: blur(20px) saturate(1.7) contrast(1.15) brightness(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.7) contrast(1.15)
+      brightness(1.2);
+  }
+}
+
+@keyframes nav-active-animation {
+  from {
+    /* No effect initially - just the ::before element */
+  }
+  to {
+    /* The background effect will be applied to ::before pseudo-element via separate animation */
   }
 }
 
@@ -954,6 +1204,34 @@ svg.om {
       animation-duration: 1ms; /* Firefox requires this to apply the animation */
     }
 
+    /* Fallback for browsers without backdrop-filter support but with scroll-driven animations */
+    @supports not (backdrop-filter: blur(1px)) and not
+      (-webkit-backdrop-filter: blur(1px)) {
+      @keyframes nav-animation-fallback {
+        from {
+          background: transparent;
+          box-shadow: none;
+          border: 1px solid transparent;
+        }
+        to {
+          background: rgba(248, 240, 213, 0.95);
+          box-shadow: 0 8px 32px rgba(127, 111, 73, 0.15),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+      }
+
+      nav {
+        animation-name: nav-animation-fallback;
+      }
+    }
+
+    nav ul {
+      animation: scrollfade;
+      animation-timeline: --scrollfade;
+    }
+
     /* Navigation animations */
     nav {
       animation: nav-animation linear both;
@@ -961,9 +1239,30 @@ svg.om {
       animation-range: 150px 600px;
     }
 
-    nav ul {
-      animation: scrollfade;
-      animation-timeline: --scrollfade;
+    /* Fallback for browsers without backdrop-filter support - active state */
+    @supports not (backdrop-filter: blur(1px)) and not
+      (-webkit-backdrop-filter: blur(1px)) {
+      @keyframes nav-active-before-animation-fallback {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+          background: transparent;
+          box-shadow: none;
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+          background: rgba(248, 240, 213, 0.9);
+          box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+            inset 0 -1px 0 0 rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+      }
+
+      nav a.active::before,
+      nav a.current::before {
+        animation-name: nav-active-before-animation-fallback;
+      }
     }
   }
 

@@ -65,17 +65,21 @@
 
     <body class="animated">
         <div class="container editable" id="untitled-region-1">
-            <nav class="d-flex justify-content-between gap-3">
-                <ul>
-                    <li><a href="#namaste">Namaste</a></li>
-                    <li><a href="#ueber-mich">Über mich</a></li>
-                    <li><a href="#yoga-als-therapie">Yoga als Therapie</a></li>
-                    <li><a href="#classes">Kurse</a></li>
-                    <li><a href="#preise">Angebote</a></li>
-                    <li><a href="#kontakt">Kontakt</a></li>
-                    <li><a href="hairspa">Hairspa</a></li>
-                </ul>
-            </nav>
+            <div class="nav-wrapper">
+                <nav class="d-flex justify-content-between gap-3">
+                    <ul>
+                        <li><a href="#namaste">Namaste</a></li>
+                        <li><a href="#ueber-mich">Über mich</a></li>
+                        <li><a href="#yoga-als-therapie">Yoga als Therapie</a></li>
+                        <li><a href="#classes">Kurse</a></li>
+                        <li><a href="#preise">Angebote</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                        <li><a href="hairspa">Hairspa</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-fade-left"></div>
+                <div class="nav-fade-right"></div>
+            </div>
         <article>
             <section id="namaste">
                 <header>
@@ -365,6 +369,37 @@
 
                 sections.forEach((s) => observer.observe(s));
             }
+
+            // Add scroll detection for active state pill
+            function handleScroll() {
+                const scrolled = window.scrollY > 150;
+                document.body.classList.toggle('scrolled', scrolled);
+                
+                // Check nav horizontal scroll for fades
+                checkNavScroll();
+            }
+            
+            function checkNavScroll() {
+                const nav = document.querySelector('nav');
+                const fadeLeft = document.querySelector('.nav-fade-left');
+                const fadeRight = document.querySelector('.nav-fade-right');
+                
+                if (nav && fadeLeft && fadeRight) {
+                    const navScrolled = nav.scrollLeft > 0;
+                    const isScrolledToEnd = nav.scrollLeft >= (nav.scrollWidth - nav.clientWidth - 1);
+                    
+                    fadeLeft.classList.toggle('nav-scrolled', navScrolled);
+                    fadeRight.classList.toggle('nav-at-end', isScrolledToEnd);
+                }
+            }
+            
+            function handleNavScroll() {
+                checkNavScroll();
+            }
+
+            window.addEventListener('scroll', handleScroll);
+            document.querySelector('nav')?.addEventListener('scroll', handleNavScroll);
+            handleScroll(); // Check initial state
         </script>
     </body>
 </html>
