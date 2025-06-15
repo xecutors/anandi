@@ -860,20 +860,28 @@ input:-webkit-autofill:hover {
    ========================================================================== */
 button {
   font-family: "Poppins", sans-serif;
-  padding: 1rem;
-  background-color: var(--olivebrown-dark);
-  color: var(--beige);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--olivebrown-dark);
+  color: var(--olivebrown);
   border: none;
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 400;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(127, 111, 73, 0.3);
 }
 
 button:hover,
 button:focus-visible {
-  outline: 2px solid var(--olivebrown-dark);
-  outline-offset: 2px;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(127, 111, 73, 0.4);
+  background: #6b5d3b;
+  color: var(--olivebrown-light);
 }
 
 .booking-button {
@@ -1507,7 +1515,7 @@ svg.om {
   background: var(--olivebrown-dark);
   color: var(--olivebrown);
   padding: 0.75rem 1.5rem;
-  border-radius: 50px;
+  border-radius: 0.5rem;
   text-decoration: none;
   font-weight: 400;
   transition: all 0.3s ease;
@@ -1564,7 +1572,7 @@ svg.om {
   background: var(--olivebrown-dark);
   color: var(--olivebrown);
   padding: 1rem 2rem;
-  border-radius: 50px;
+  border-radius: 0.5rem;
   text-decoration: none;
   font-weight: 400;
   font-size: 1.1rem;
