@@ -4,33 +4,33 @@
     // Course schedule data with abbreviations
     const courseSchedule = {
         monday: [
-            { time: '07:15-08:30', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' },
+            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
             { time: '11:50-12:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LT' },
-            { time: '14:30-15:45', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' }
+            { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
         ],
         tuesday: [
-            { time: '05:45-07:00', name: 'Regular Morning Class', type: 'earlybird', abbr: 'MO' },
+            { time: '05:45-07:00', name: 'Morning Yoga 75 Min.', type: 'earlybird', abbr: 'MO' },
+            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
             { time: '12:50-13:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LL' },
-            { time: '16:15-17:30', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' }
         ],
         wednesday: [
-            { time: '07:15-08:30', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' },
+            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
             { time: '11:50-12:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LT' },
-            { time: '14:30-15:45', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' }
+            { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
         ],
         thursday: [
-            { time: '05:45-07:00', name: 'Regular Morning Class', type: 'earlybird', abbr: 'MO' },
+            { time: '05:45-07:00', name: 'Morning Yoga 75 Min.', type: 'earlybird', abbr: 'MO' },
+            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
             { time: '12:50-13:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LL' },
-            { time: '16:15-17:30', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' }
         ],
         friday: [
-            { time: '07:15-08:30', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' },
+            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
             { time: '11:50-12:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LT' },
-            { time: '14:30-15:45', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' }
+            { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
         ],
         saturday: [
-            { time: '09:00-10:15', name: 'Regular Morning Class', type: 'morning', abbr: 'MO' },
-            { time: '10:30-11:45', name: 'Fundamental Yoga für Einsteiger', type: 'fundamental', abbr: 'FW' },
+            { time: '07:30-10:00', name: 'Morning Yoga 90 Min.', type: 'morning', abbr: 'MO' },
+            { time: '10:30-12:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' },
         ],
         sunday: []
     };
@@ -71,6 +71,39 @@
         renderWeeklySchedule();
     }
 
+    function addCourseToCell(cell, course) {
+        const courseDiv = document.createElement('div');
+        courseDiv.className = `course-cell ${course.type}`;
+        
+        // Split course name and duration
+        const nameMatch = course.name.match(/^(.+?)(\s+\d+\s+Min\.)$/);
+        
+        if (nameMatch) {
+            const nameSpan = document.createElement('div');
+            nameSpan.className = 'course-name';
+            nameSpan.textContent = nameMatch[1];
+            
+            const durationSpan = document.createElement('div');
+            durationSpan.className = 'course-duration';
+            durationSpan.textContent = nameMatch[2].trim();
+            
+            courseDiv.appendChild(nameSpan);
+            courseDiv.appendChild(durationSpan);
+        } else {
+            const nameSpan = document.createElement('div');
+            nameSpan.className = 'course-name';
+            nameSpan.textContent = course.name;
+            courseDiv.appendChild(nameSpan);
+        }
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'course-time';
+        timeSpan.textContent = course.time;
+        
+        courseDiv.appendChild(timeSpan);
+        cell.appendChild(courseDiv);
+    }
+
     function renderWeeklySchedule() {
         // Clear schedules
         weeklyScheduleBody.innerHTML = '';
@@ -87,7 +120,7 @@
         ];
         
         // Define time slots
-        const timeSlots = ['05:45', '07:15', '09:00', '10:30', '11:50', '12:50', '14:30', '16:15'];
+        const timeSlots = ['05:45', '07:15', '07:30', '10:30', '11:50', '12:50', '14:30'];
         
         // Create rows for each weekday
         weekdays.forEach(weekday => {
@@ -111,21 +144,7 @@
                 const course = courses.find(c => c.time.startsWith(timeSlot));
                 
                 if (course) {
-                    const courseDiv = document.createElement('div');
-                    courseDiv.className = `course-cell ${course.type}`;
-                    
-                    const nameSpan = document.createElement('div');
-                    nameSpan.className = 'course-name';
-                    nameSpan.textContent = course.name;
-                    
-                    const timeSpan = document.createElement('div');
-                    timeSpan.className = 'course-time';
-                    timeSpan.textContent = course.time;
-                    
-                    courseDiv.appendChild(nameSpan);
-                    courseDiv.appendChild(timeSpan);
-                    
-                    cell.appendChild(courseDiv);
+                    addCourseToCell(cell, course);
                 }
                 
                 row.appendChild(cell);

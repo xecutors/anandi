@@ -3,8 +3,6 @@
    ========================================================================== */
 :root {
   /* Color Palette */
-  --beige: #f8f0d5;
-  --olivebrown: #d4b78f;
   --quaternary: #e5d8ae;
   --withblur: rgba(248, 240, 213, 0.6);
   --beige: #eee5c4;
@@ -993,6 +991,15 @@ button:focus-visible {
   }
 }
 
+.pricing-card {
+  background: var(--olivebrown);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px rgba(127, 111, 73, 0.15);
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
 /* Pricing Grid */
 .pricing-grid {
   display: grid;
@@ -1618,6 +1625,7 @@ th {
 .course-calendar-section {
   margin: 3rem auto 7rem;
   width: 100%;
+  max-width: none;
 }
 
 .calendar-container {
@@ -1829,9 +1837,9 @@ th {
 }
 
 .schedule-table {
-  width: auto;
+  width: 100%;
   border-collapse: collapse;
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 .schedule-table th,
@@ -1841,8 +1849,8 @@ th {
   padding: 0.25rem;
   text-align: left;
   vertical-align: middle;
-  min-width: 120px;
-  white-space: nowrap;
+  width: 14.28%;
+  white-space: normal;
 }
 
 .schedule-table th:last-child,
@@ -1889,6 +1897,14 @@ th {
   font-weight: 200;
   color: var(--olivebrown-dark);
   opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+.course-duration {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--olivebrown-dark);
+  opacity: 0.9;
   margin-top: 0.25rem;
 }
 
