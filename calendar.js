@@ -29,7 +29,7 @@
             { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
         ],
         saturday: [
-            { time: '07:30-10:00', name: 'Morning Yoga 90 Min.', type: 'morning', abbr: 'MO' },
+            { time: '08:30-10:00', name: 'Morning Yoga 90 Min.', type: 'morning', abbr: 'MO' },
             { time: '10:30-12:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' },
         ],
         sunday: []
@@ -120,7 +120,7 @@
         ];
         
         // Define time slots
-        const timeSlots = ['05:45', '07:15', '07:30', '10:30', '11:50', '12:50', '14:30'];
+        const timeSlots = ['05:45', '07:15', '08:30', '10:30', '11:50', '12:50', '14:30'];
         
         // Create rows for each weekday
         weekdays.forEach(weekday => {
