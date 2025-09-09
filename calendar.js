@@ -4,35 +4,59 @@
     // Course schedule data with abbreviations
     const courseSchedule = {
         monday: [
-            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
-            { time: '11:50-12:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LT' },
-            { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
+            { time: '07:15-08:15', name: 'Morning Batch 1 60 Min.', type: 'morning', abbr: 'MB1' },
+            { time: '09:00-10:15', name: 'Morning Batch 2 75 Min.', type: 'morning', abbr: 'MB2' },
+            { time: '10:30-11:45', name: 'Private Lesson 1:1 75 Min.', type: 'private', abbr: 'PL' },
+            { time: '12:00-12:50', name: 'Lunchtime 50 Min.', type: 'lunchtime', abbr: 'LT' },
+            { time: '14:00-18:00', name: 'Private Lesson 1:1 60-90 Min.', type: 'private', abbr: 'PL' },
+            { time: '18:15-19:15', name: 'Afterwork 60-90 Min.', type: 'afterwork', abbr: 'AFT' },
+            { time: '19:30', name: 'Evening 60-90 Min.', type: 'evening', abbr: 'EVE' }
         ],
         tuesday: [
-            { time: '05:45-07:00', name: 'Morning Yoga 75 Min.', type: 'earlybird', abbr: 'MO' },
-            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
-            { time: '12:50-13:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LL' },
+            { time: '07:15-08:15', name: 'Morning Batch 1 60 Min.', type: 'morning', abbr: 'MB1' },
+            { time: '09:00-10:15', name: 'Morning Batch 2 75 Min.', type: 'morning', abbr: 'MB2' },
+            { time: '10:30-11:45', name: 'Private Lesson 1:1 75 Min.', type: 'private', abbr: 'PL' },
+            { time: '12:00-12:50', name: 'Lunchtime 50 Min.', type: 'lunchtime', abbr: 'LT' },
+            { time: '14:00-18:00', name: 'Private Lesson 1:1 60-90 Min.', type: 'private', abbr: 'PL' },
+            { time: '18:15-19:15', name: 'Afterwork 60-90 Min.', type: 'afterwork', abbr: 'AFT' },
+            { time: '19:30', name: 'Evening 60-90 Min.', type: 'evening', abbr: 'EVE' }
         ],
         wednesday: [
-            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
-            { time: '11:50-12:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LT' },
-            { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
+            { time: '07:15-08:15', name: 'Morning Batch 1 60 Min.', type: 'morning', abbr: 'MB1' },
+            { time: '09:00-10:15', name: 'Morning Batch 2 75 Min.', type: 'morning', abbr: 'MB2' },
+            { time: '10:30-11:45', name: 'Private Lesson 1:1 75 Min.', type: 'private', abbr: 'PL' },
+            { time: '12:00-12:50', name: 'Lunchtime 50 Min.', type: 'lunchtime', abbr: 'LT' },
+            { time: '14:00-18:00', name: 'Private Lesson 1:1 60-90 Min.', type: 'private', abbr: 'PL' },
+            { time: '18:15-19:15', name: 'Afterwork 60-90 Min.', type: 'afterwork', abbr: 'AFT' },
+            { time: '19:30', name: 'Evening 60-90 Min.', type: 'evening', abbr: 'EVE' }
         ],
         thursday: [
-            { time: '05:45-07:00', name: 'Morning Yoga 75 Min.', type: 'earlybird', abbr: 'MO' },
-            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
-            { time: '12:50-13:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LL' },
+            { time: '07:15-08:15', name: 'Morning Batch 1 60 Min.', type: 'morning', abbr: 'MB1' },
+            { time: '09:00-10:15', name: 'Morning Batch 2 75 Min.', type: 'morning', abbr: 'MB2' },
+            { time: '10:30-11:45', name: 'Private Lesson 1:1 75 Min.', type: 'private', abbr: 'PL' },
+            { time: '12:00-12:50', name: 'Lunchtime 50 Min.', type: 'lunchtime', abbr: 'LT' },
+            { time: '14:00-18:00', name: 'Private Lesson 1:1 60-90 Min.', type: 'private', abbr: 'PL' },
+            { time: '18:15-19:15', name: 'Afterwork 60-90 Min.', type: 'afterwork', abbr: 'AFT' },
+            { time: '19:30', name: 'Evening 60-90 Min.', type: 'evening', abbr: 'EVE' }
         ],
         friday: [
-            { time: '07:15-08:30', name: 'Fundamental Yoga 75 Min.', type: 'fundamental', abbr: 'FW' },
-            { time: '11:50-12:40', name: 'Lunchtime Yoga 50 Min.', type: 'lunchtime', abbr: 'LT' },
-            { time: '14:30-16:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' }
+            { time: '07:15-08:15', name: 'Morning Batch 1 60 Min.', type: 'morning', abbr: 'MB1' },
+            { time: '09:00-10:15', name: 'Morning Batch 2 75 Min.', type: 'morning', abbr: 'MB2' },
+            { time: '10:30-11:45', name: 'Private Lesson 1:1 75 Min.', type: 'private', abbr: 'PL' },
+            { time: '12:00-12:50', name: 'Lunchtime 50 Min.', type: 'lunchtime', abbr: 'LT' },
+            { time: '14:00-18:00', name: 'Private Lesson 1:1 60-90 Min.', type: 'private', abbr: 'PL' },
+            { time: '18:15-19:15', name: 'Afterwork 60-90 Min.', type: 'afterwork', abbr: 'AFT' },
+            { time: '19:30', name: 'Evening 60-90 Min.', type: 'evening', abbr: 'EVE' }
         ],
         saturday: [
-            { time: '08:30-10:00', name: 'Morning Yoga 90 Min.', type: 'morning', abbr: 'MO' },
-            { time: '10:30-12:00', name: 'Fundamental Yoga 90 Min.', type: 'fundamental', abbr: 'FW' },
+            { time: '09:00-10:15', name: 'Morning Batch 2 75 Min.', type: 'morning', abbr: 'MB2' },
+            { time: '10:30-12:00', name: 'Weekend 90 Min.', type: 'weekend', abbr: 'WKD' },
+            { time: '12:00-13:30', name: 'Private Lesson 1:1 60-90 Min.', type: 'lunchtime', abbr: 'LT' },
+            { time: '14:00-18:00', name: 'Private Lesson 1:1 60-90 Min.', type: 'private', abbr: 'PL' }
         ],
-        sunday: []
+        sunday: [
+            { time: '12:00', name: 'Sunday Bliss 90-120 Min.', type: 'sunday', abbr: 'SUN' }
+        ]
     };
 
 
@@ -75,8 +99,8 @@
         const courseDiv = document.createElement('div');
         courseDiv.className = `course-cell ${course.type}`;
         
-        // Split course name and duration
-        const nameMatch = course.name.match(/^(.+?)(\s+\d+\s+Min\.)$/);
+        // Split course name and duration more flexibly
+        const nameMatch = course.name.match(/^(.+?)\s+(\d+(?:-\d+)?\s+Min\.)$/);
         
         if (nameMatch) {
             const nameSpan = document.createElement('div');
@@ -85,7 +109,7 @@
             
             const durationSpan = document.createElement('div');
             durationSpan.className = 'course-duration';
-            durationSpan.textContent = nameMatch[2].trim();
+            durationSpan.textContent = nameMatch[2];
             
             courseDiv.appendChild(nameSpan);
             courseDiv.appendChild(durationSpan);
@@ -108,6 +132,8 @@
         // Clear schedules
         weeklyScheduleBody.innerHTML = '';
         fixedColumnBody.innerHTML = '';
+        const daysHeader = document.getElementById('daysHeader');
+        daysHeader.innerHTML = '';
         
         // Define weekdays
         const weekdays = [
@@ -116,30 +142,39 @@
             { key: 'wednesday', name: 'Mi' },
             { key: 'thursday', name: 'Do' },
             { key: 'friday', name: 'Fr' },
-            { key: 'saturday', name: 'Sa' }
+            { key: 'saturday', name: 'Sa' },
+            { key: 'sunday', name: 'So' }
         ];
         
         // Define time slots
-        const timeSlots = ['05:45', '07:15', '08:30', '10:30', '11:50', '12:50', '14:30'];
+        const timeSlots = ['07:15', '09:00', '10:30', '12:00', '14:00', '18:15', '19:30'];
         
-        // Create rows for each weekday
+        // Create header row with day names
         weekdays.forEach(weekday => {
-            // Fixed column row (day names)
+            const th = document.createElement('th');
+            th.textContent = weekday.name;
+            daysHeader.appendChild(th);
+        });
+        
+        // Create rows for each time slot
+        timeSlots.forEach(timeSlot => {
+            // Fixed column with time
             const fixedRow = document.createElement('tr');
-            const dayCell = document.createElement('td');
-            dayCell.textContent = weekday.name;
-            fixedRow.appendChild(dayCell);
+            const timeCell = document.createElement('td');
+            timeCell.textContent = timeSlot;
+            timeCell.className = 'time-cell';
+            fixedRow.appendChild(timeCell);
             fixedColumnBody.appendChild(fixedRow);
             
-            // Scrollable content row
+            // Scrollable content row with courses
             const row = document.createElement('tr');
             row.className = 'schedule-row';
             
-            // Time slot cells
-            timeSlots.forEach(timeSlot => {
+            // Create cells for each day
+            weekdays.forEach(weekday => {
                 const cell = document.createElement('td');
                 
-                // Find course for this day and time slot
+                // Find course for this time and day
                 const courses = courseSchedule[weekday.key] || [];
                 const course = courses.find(c => c.time.startsWith(timeSlot));
                 
